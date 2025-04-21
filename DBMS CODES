@@ -1,0 +1,212 @@
+1ST EXPERIMENT =============>>>>>>>>>
+-------------------------------------
+
+
+CREATE TABLE Sneha_verma
+(
+  college_id NUMBER(2),
+  College_name VARCHAR(30),
+  Branch VARCHAR(10)
+);
+
+ALTER TABLE Sneha_verma
+ADD CGPA NUMBER;
+
+ALTER TABLE Sneha_verma
+RENAME COLUMN College_name to University_name;
+
+DROP TABLE Sneha_verma
+
+
+
+
+
+
+
+
+2nd EXPERIMENT =============>>>>>>>>>
+-------------------------------------
+
+CREATE TABLE sneha_verma (
+    id INT PRIMARY KEY, 
+    name VARCHAR(100),
+    age INT,
+    city VARCHAR(100),
+    profession VARCHAR(100)
+);
+
+INSERT INTO sneha_verma (id, name, age, city, profession)
+VALUES (1, 'Sneha Verma', 20, 'Ropar', 'Software Engineer');
+
+INSERT INTO sneha_verma (id, name, age, city, profession)
+VALUES (2, 'Ankit Singh', 21, 'Ara', 'Data Analyst');
+
+INSERT INTO sneha_verma (id, name, age, city, profession)
+VALUES (3, 'Gurkiran Kaur', 22, 'Ludhiana', 'Graphic Designer');
+
+UPDATE sneha_verma
+SET city = 'Chandigarh', profession = 'Web Developer'
+WHERE id = 3;
+
+DELETE FROM sneha_verma
+WHERE id = 2;
+
+SELECT * FROM sneha_verma;
+
+
+
+
+
+4th EXPERIMENT =============>>>>>>>>>
+-------------------------------------
+
+CREATE TABLE departments (
+    department_id INT PRIMARY KEY,
+    department_name VARCHAR(100) NOT NULL DEFAULT 'Unknown Department',
+    location VARCHAR(100) NOT NULL DEFAULT 'Not Assigned'
+);
+
+INSERT INTO departments (department_id, department_name, location)
+VALUES
+(1, 'Human Resources', 'Mumbai'),
+(2, 'IT Support', 'Bangalore'),
+(3, 'Finance', 'Delhi'),
+(4, 'Marketing', 'Hyderabad');
+
+CREATE TABLE employees (
+    employee_id INT PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(50) UNIQUE NOT NULL,
+    salary DECIMAL(10, 2) CHECK (salary > 0),
+    department_id INT,
+    CONSTRAINT fk_department FOREIGN KEY (department_id) REFERENCES departments(department_id)
+);
+
+INSERT INTO employees (employee_id, full_name, email, salary, department_id)
+VALUES
+(101, 'Rajesh Sharma', 'rajesh@ex.com', 55000.00, 1),
+(102, 'Priya Verma', 'priya@ex.com', 65000.00, 2),
+(103, 'Amit Patel', 'amit@ex.com', 70000.00, 3),
+(104, 'Neha Iyer', 'neha@ex.com', 700000.00, 4);
+
+
+
+
+
+
+
+
+
+
+6th EXPERIMENT =============>>>>>>>>>
+-------------------------------------
+
+INNER JOIN ========>>>>>>
+
+
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    City VARCHAR(100)
+);
+
+INSERT INTO Students (StudentID, Name, City) VALUES 
+(1, 'Aarav', 'Delhi'),
+(2, 'Isha', 'Mumbai'),
+(3, 'Sneha', 'Bangalore'),
+(4, 'Priya', 'Chennai');
+
+CREATE TABLE Marks (
+    StudentID INT,
+    Subject VARCHAR(50),
+    Marks INT
+);
+
+INSERT INTO Marks (StudentID, Subject, Marks) VALUES 
+(1, 'Math', 85),
+(2, 'Science', 90),
+(3, 'Math', 75),
+(4, 'Science', 80);
+
+SELECT Students.Name, Marks.Subject, Marks.Marks
+FROM Students
+INNER JOIN Marks
+ON Students.StudentID = Marks.StudentID;
+
+
+
+
+
+LEFT OUTER JOIN=====>>>>
+
+CREATE TABLE Students (StudentID INT PRIMARY KEY, Name VARCHAR(50), City VARCHAR(100));
+INSERT INTO Students VALUES (1, 'Aarav', 'Delhi'), (2, 'Isha', 'Mumbai'), (3, 'Sneha', 'Bangalore'), (4, 'Priya', 'Chennai'), (5, 'Rahul', 'Kolkata');
+
+CREATE TABLE Marks (StudentID INT, Subject VARCHAR(50), Marks INT);
+INSERT INTO Marks VALUES (1, 'Math', 85), (2, 'Science', 90), (3, 'Math', 75), (4, 'Science', 80);
+
+SELECT Students.Name, Students.City, Marks.Subject, Marks.Marks
+FROM Students
+LEFT JOIN Marks
+ON Students.StudentID = Marks.StudentID;
+
+
+
+
+
+
+
+RIGHT OUTER JOIN====>>>>
+
+CREATE TABLE Students (StudentID INT PRIMARY KEY, Name VARCHAR(50), City VARCHAR(100));
+INSERT INTO Students VALUES (1, 'Aarav', 'Delhi'), (2, 'Isha', 'Mumbai'), (3, 'Sneha', 'Bangalore'), (4, 'Priya', 'Chennai');
+
+CREATE TABLE Marks (StudentID INT, Subject VARCHAR(50), Marks INT);
+INSERT INTO Marks VALUES (1, 'Math', 85), (2, 'Science', 90), (3, 'Math', 75), (4, 'Science', 80), (5, 'History', 70);
+
+SELECT Students.Name, Students.City, Marks.Subject, Marks.Marks
+FROM Students
+RIGHT JOIN Marks
+ON Students.StudentID = Marks.StudentID;
+
+
+
+
+
+
+
+
+
+
+FULL OUTER JOIN===>>>
+
+CREATE TABLE Students (StudentID INT PRIMARY KEY, Name VARCHAR(50), City VARCHAR(100));
+INSERT INTO Students VALUES (1, 'Aarav', 'Delhi'), (2, 'Isha', 'Mumbai'), (3, 'Sneha', 'Bangalore'), (4, 'Priya', 'Chennai'), (5, 'Rahul', 'Kolkata');
+
+CREATE TABLE Marks (StudentID INT, Subject VARCHAR(50), Marks INT);
+INSERT INTO Marks VALUES (1, 'Math', 85), (2, 'Science', 90), (3, 'Math', 75), (4, 'Science', 80), (6, 'History', 70);
+
+SELECT Students.Name, Students.City, Marks.Subject, Marks.Marks
+FROM Students
+FULL OUTER JOIN Marks
+ON Students.StudentID = Marks.StudentID;
+
+
+
+
+
+
+
+
+NATURAL JOIN====>>>
+
+CREATE TABLE Students (StudentID INT PRIMARY KEY, Name VARCHAR(50), City VARCHAR(100));
+INSERT INTO Students VALUES (1, 'Aarav', 'Delhi'), (2, 'Isha', 'Mumbai'), (3, 'Sneha', 'Bangalore'), (4, 'Priya', 'Chennai'), (5, 'Rahul', 'Kolkata'); -- Rahul has no matching marks
+
+CREATE TABLE Marks (StudentID INT, Subject VARCHAR(50), Marks INT);
+INSERT INTO Marks VALUES (1, 'Math', 85), (2, 'Science', 90), (3, 'Math', 75), (4, 'Science', 80);
+
+SELECT Students.Name, Students.City, Marks.Subject, Marks.Marks
+FROM Students
+NATURAL JOIN Marks;
+
